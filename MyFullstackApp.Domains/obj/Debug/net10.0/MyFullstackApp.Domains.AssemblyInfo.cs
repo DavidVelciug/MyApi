@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyFullstackApp.Domains")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e1558ef9faeb11047de32d47e47f0cdcc5efdbac")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+43a91678e9d5a14dc49f1a9f69665fd07af03c84")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyFullstackApp.Domains")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyFullstackApp.Domains")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

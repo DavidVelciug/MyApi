@@ -20,3 +20,15 @@ C:\Users\saile\OneDrive\Desktop\MyFullstackApp\MyApi\MyFullstackApp.Domains\obj\
 C:\Users\saile\OneDrive\Desktop\MyFullstackApp\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\refint\MyFullstackApp.Domains.dll
 C:\Users\saile\OneDrive\Desktop\MyFullstackApp\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\MyFullstackApp.Domains.pdb
 C:\Users\saile\OneDrive\Desktop\MyFullstackApp\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\ref\MyFullstackApp.Domains.dll
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\bin\Debug\net10.0\MyFullstackApp.Domains.deps.json
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\bin\Debug\net10.0\MyFullstackApp.Domains.dll
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\bin\Debug\net10.0\MyFullstackApp.Domains.pdb
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\MyFullstackApp.Domains.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\MyFullstackApp.Domains.AssemblyInfoInputs.cache
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\MyFullstackApp.Domains.AssemblyInfo.cs
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\MyFullstackApp.Domains.csproj.CoreCompileInputs.cache
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\MyFullstackApp.Domains.sourcelink.json
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\MyFullstackApp.Domains.dll
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\refint\MyFullstackApp.Domains.dll
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\MyFullstackApp.Domains.pdb
+c:\Users\saile\OneDrive\Desktop\MemoryLane\MyApi\MyFullstackApp.Domains\obj\Debug\net10.0\ref\MyFullstackApp.Domains.dll

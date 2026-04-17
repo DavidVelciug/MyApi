@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MyApi.Filters;
 using MyFullstackApp.BusinessLogic;
 using MyFullstackApp.BusinessLogic.Interface;
 using MyFullstackApp.Domains.Models.User;
@@ -7,6 +8,7 @@ namespace MyApi.Controller;
 
 [Route("api/user")]
 [ApiController]
+[RoleAccess(AppRoles.User, AppRoles.Moderator, AppRoles.Admin)]
 public class UserAccountController : ControllerBase
 {
     private readonly IUserAccount _users;
@@ -23,6 +25,7 @@ public class UserAccountController : ControllerBase
     }
 
     [HttpGet("id")]
+    [RoleAccess(AppRoles.Guest, AppRoles.User, AppRoles.Moderator, AppRoles.Admin)]
     public IActionResult Get(int id)
     {
         var u = _users.GetUserAccountByIdAction(id);
@@ -30,6 +33,7 @@ public class UserAccountController : ControllerBase
     }
 
     [HttpPost]
+    [RoleAccess(AppRoles.Guest, AppRoles.User, AppRoles.Moderator, AppRoles.Admin)]
     public IActionResult Create([FromBody] UserAccountDto user)
     {
         return Ok(_users.ResponceUserAccountCreateAction(user));

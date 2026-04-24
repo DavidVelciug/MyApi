@@ -90,6 +90,8 @@ public static class DbInitializer
         {
             Email = "demo@memorylane.com",
             DisplayName = "Демо пользователь",
+            Role = "user",
+            Password = "demo123",
             CreatedAtUtc = DateTime.UtcNow.AddDays(-30),
             NotifyEmailEnabled = true,
             NotifyPushEnabled = true,
@@ -99,6 +101,8 @@ public static class DbInitializer
         {
             Email = "maria@example.com",
             DisplayName = "Мария",
+            Role = "moderator",
+            Password = "maria123",
             CreatedAtUtc = DateTime.UtcNow.AddDays(-14),
             NotifyEmailEnabled = true,
             NotifyPushEnabled = false,
@@ -108,6 +112,8 @@ public static class DbInitializer
         {
             Email = "alex@example.com",
             DisplayName = "Алексей",
+            Role = "admin",
+            Password = "alex123",
             CreatedAtUtc = DateTime.UtcNow.AddDays(-7),
             NotifyEmailEnabled = false,
             NotifyPushEnabled = true,

@@ -7,8 +7,11 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)
     {
-        var dbPath = Path.Combine(Directory.GetCurrentDirectory(), "memorylane.design.db");
-        DbSession.ConnectionStrings = $"Data Source={dbPath}";
+        // Дизайн-тайм: переменная окружения или LocalDB (как в типовой лабораторной с MSSQL).
+        var conn = Environment.GetEnvironmentVariable("MemoryLane_DesignTimeConnection")
+            ?? "Server=(localdb)\\mssqllocaldb;Database=MemoryLaneDb;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
+        DbSession.ConnectionStrings = conn;
+        DbSession.Provider = conn.Contains("Server=", StringComparison.OrdinalIgnoreCase) ? "sqlserver" : "sqlite";
         return new AppDbContext();
     }
 }

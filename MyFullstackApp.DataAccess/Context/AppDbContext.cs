@@ -9,6 +9,16 @@ namespace MyFullstackApp.DataAccess.Context;
 
 public class AppDbContext : DbContext
 {
+    // 1. Добавляем конструктор для получения настроек из Program.cs
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {
+    }
+
+    // 2. Оставляем пустой конструктор для совместимости с твоими скриптами (если нужно)
+    public AppDbContext()
+    {
+    }
+
     public DbSet<ProductData> Products { get; set; } = null!;
     public DbSet<CategoryData> Categories { get; set; } = null!;
     public DbSet<UserAccountData> UserAccounts { get; set; } = null!;
@@ -16,15 +26,21 @@ public class AppDbContext : DbContext
     public DbSet<CapsuleLocationData> CapsuleLocations { get; set; } = null!;
     public DbSet<ModerationReportData> ModerationReports { get; set; } = null!;
 
+    // 3. Этот метод больше не нужен для работы, так как настройки теперь в Program.cs
+    // Но мы оставили логику переключения в Program.cs, так что здесь можно просто закомментировать
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (DbSession.Provider.Equals("sqlserver", StringComparison.OrdinalIgnoreCase))
+        if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
-            return;
+            if (DbSession.Provider.Equals("sqlserver", StringComparison.OrdinalIgnoreCase))
+            {
+                optionsBuilder.UseSqlServer(DbSession.ConnectionStrings);
+            }
+            else
+            {
+                optionsBuilder.UseSqlite(DbSession.ConnectionStrings);
+            }
         }
-
-        optionsBuilder.UseSqlite(DbSession.ConnectionStrings);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -65,7 +65,6 @@ InitializeDatabase(app);
 app.UseCors("DevCorsPolicy");
 app.UseHttpsRedirection();
 
-// ПОРЯДОК ВАЖЕН: Сначала КТО ты (Authn), потом ЧТО тебе можно (Authz)
 app.UseAuthentication(); 
 app.UseAuthorization();
 
@@ -73,7 +72,6 @@ app.MapControllers();
 
 app.Run();
 
-// --- Вспомогательные методы (должны быть в конце файла) ---
 
 static void InitializeDatabase(WebApplication app)
 {

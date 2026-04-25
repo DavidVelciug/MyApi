@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MyFullstackApp.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class SqliteInitial : Migration
+    public partial class InitialSqlServer : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,9 +15,9 @@ namespace MyFullstackApp.DataAccess.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,14 +28,16 @@ namespace MyFullstackApp.DataAccess.Migrations
                 name: "UserAccounts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    DisplayName = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    NotifyEmailEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    NotifyPushEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    LoginAlertsEnabled = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    DisplayName = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NotifyEmailEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    NotifyPushEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LoginAlertsEnabled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,13 +48,13 @@ namespace MyFullstackApp.DataAccess.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 4000, nullable: true),
-                    Image = table.Column<string>(type: "TEXT", maxLength: 1000, nullable: true),
-                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,18 +71,18 @@ namespace MyFullstackApp.DataAccess.Migrations
                 name: "TimeCapsules",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    OwnerUserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ContentType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Title = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    TextContent = table.Column<string>(type: "TEXT", nullable: true),
-                    LinkUrl = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: true),
-                    FileStoragePath = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true),
-                    OpenAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    RecipientEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    IsPublic = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OwnerUserId = table.Column<int>(type: "int", nullable: false),
+                    ContentType = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    TextContent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LinkUrl = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true),
+                    FileStoragePath = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    OpenAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RecipientEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    IsPublic = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,12 +99,12 @@ namespace MyFullstackApp.DataAccess.Migrations
                 name: "CapsuleLocations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CapsuleId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Latitude = table.Column<double>(type: "REAL", nullable: false),
-                    Longitude = table.Column<double>(type: "REAL", nullable: false),
-                    PlaceLabel = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CapsuleId = table.Column<int>(type: "int", nullable: false),
+                    Latitude = table.Column<double>(type: "float", nullable: false),
+                    Longitude = table.Column<double>(type: "float", nullable: false),
+                    PlaceLabel = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -119,13 +121,13 @@ namespace MyFullstackApp.DataAccess.Migrations
                 name: "ModerationReports",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CapsuleId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ReporterEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    Reason = table.Column<string>(type: "TEXT", maxLength: 2000, nullable: false),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CapsuleId = table.Column<int>(type: "int", nullable: false),
+                    ReporterEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    Reason = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

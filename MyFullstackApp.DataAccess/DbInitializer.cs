@@ -110,17 +110,28 @@ public static class DbInitializer
         };
         var u3 = new UserAccountData
         {
-            Email = "alex@example.com",
-            DisplayName = "Алексей",
+            Email = "admin.one@memorylane.com",
+            DisplayName = "Главный админ",
             Role = "admin",
-            Password = "alex123",
+            Password = "AdminOne123!",
             CreatedAtUtc = DateTime.UtcNow.AddDays(-7),
             NotifyEmailEnabled = false,
             NotifyPushEnabled = true,
             LoginAlertsEnabled = false
         };
+        var u4 = new UserAccountData
+        {
+            Email = "admin.two@memorylane.com",
+            DisplayName = "Резервный админ",
+            Role = "admin",
+            Password = "AdminTwo123!",
+            CreatedAtUtc = DateTime.UtcNow.AddDays(-3),
+            NotifyEmailEnabled = true,
+            NotifyPushEnabled = true,
+            LoginAlertsEnabled = true
+        };
 
-        db.UserAccounts.AddRange(u1, u2, u3);
+        db.UserAccounts.AddRange(u1, u2, u3, u4);
         db.SaveChanges();
 
         var now = DateTime.UtcNow;

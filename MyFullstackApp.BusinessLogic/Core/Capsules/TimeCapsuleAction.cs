@@ -94,6 +94,25 @@ public class TimeCapsuleAction
             .ToList();
     }
 
+    protected List<TimeCapsuleDto> ExecuteGetTimeCapsulesByRecipientAction(int recipientUserId)
+    {
+        using var db = new AppDbContext();
+        var user = db.UserAccounts.FirstOrDefault(x => x.Id == recipientUserId);
+        if (user == null)
+        {
+            return new List<TimeCapsuleDto>();
+        }
+
+        var recipientEmail = user.Email.Trim().ToLowerInvariant();
+        return db.TimeCapsules
+            .Include(c => c.Owner)
+            .Where(c => !c.IsPublic && c.RecipientEmail.ToLower() == recipientEmail)
+            .OrderByDescending(c => c.CreatedAtUtc)
+            .AsEnumerable()
+            .Select(MapCapsule)
+            .ToList();
+    }
+
     protected List<TimeCapsuleDto> ExecuteGetPublicFeedAction()
     {
         var now = DateTime.UtcNow;
@@ -131,6 +150,12 @@ public class TimeCapsuleAction
             .OrderByDescending(c => c.OpenAtUtc)
             .AsEnumerable()
             .Select(MapCapsule)
+            .Select(c =>
+            {
+                c.OpenedFrom = c.OwnerUserId == userId ? "Моя капсула" : (c.IsPublic ? "Публичная капсула" : "Присланная капсула");
+                c.OpenedAtUtc ??= c.OpenAtUtc;
+                return c;
+            })
             .ToList();
     }
 
@@ -146,6 +171,7 @@ public class TimeCapsuleAction
             _ => "Капсула"
         };
         dto.IsLocked = c.OpenAtUtc > DateTime.UtcNow;
+        dto.OpenedAtUtc = c.OpenAtUtc;
         return dto;
     }
 

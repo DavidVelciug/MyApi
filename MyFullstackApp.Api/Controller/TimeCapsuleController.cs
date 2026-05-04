@@ -46,6 +46,13 @@ public class TimeCapsuleController : ControllerBase
         return Ok(_capsules.GetTimeCapsulesByOwnerAction(ownerUserId));
     }
 
+    [HttpGet("getByRecipient")]
+    [RoleAccess(AppRoles.User, AppRoles.Moderator, AppRoles.Admin)]
+    public IActionResult GetByRecipient(int recipientUserId)
+    {
+        return Ok(_capsules.GetTimeCapsulesByRecipientAction(recipientUserId));
+    }
+
     [HttpGet("getPublicFeed")]
     public IActionResult GetPublicFeed()
     {

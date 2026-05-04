@@ -16,4 +16,8 @@ public class TimeCapsuleDto
     public DateTime CreatedAtUtc { get; set; }
     public string RecipientEmail { get; set; } = string.Empty;
     public bool IsPublic { get; set; }
+    public string? PreviewText { get; set; }
+    public bool IsLocked { get; set; }
+    public string? OpenedFrom { get; set; }
+    public DateTime? OpenedAtUtc { get; set; }
 }

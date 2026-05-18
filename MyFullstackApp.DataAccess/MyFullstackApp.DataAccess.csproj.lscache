@@ -61,6 +61,8 @@ DbSession.cs
 Migrations/
  20260420125540_InitialSqlServer.cs
  20260420125540_InitialSqlServer.Designer.cs
+ 20260510190000_AddCapsuleIdToProducts.cs
+ 20260510190000_AddCapsuleIdToProducts.Designer.cs
  AppDbContextModelSnapshot.cs
 obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs

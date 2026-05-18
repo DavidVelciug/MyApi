@@ -19,7 +19,29 @@ public class ModerationReportAction
     protected List<ModerationReportDto> ExecuteGetAllModerationReportsAction()
     {
         using var db = new AppDbContext();
-        return Mapper.Map<List<ModerationReportDto>>(db.ModerationReports.OrderByDescending(r => r.CreatedAtUtc).ToList());
+        var reports = db.ModerationReports.OrderByDescending(r => r.CreatedAtUtc).ToList();
+        var emails = reports
+            .Select(r => r.ReporterEmail.Trim().ToLowerInvariant())
+            .Where(e => e.Length > 0)
+            .Distinct()
+            .ToList();
+
+        var nameByEmail = db.UserAccounts
+            .AsEnumerable()
+            .Where(u => emails.Contains(u.Email.Trim().ToLowerInvariant()))
+            .ToDictionary(u => u.Email.Trim().ToLowerInvariant(), u => u.DisplayName);
+
+        return reports.Select(r =>
+        {
+            var dto = Mapper.Map<ModerationReportDto>(r);
+            var key = r.ReporterEmail.Trim().ToLowerInvariant();
+            if (nameByEmail.TryGetValue(key, out var dn))
+            {
+                dto.ReporterDisplayName = dn;
+            }
+
+            return dto;
+        }).ToList();
     }
 
     protected ModerationReportDto? GetModerationReportDataByIdAction(int id)

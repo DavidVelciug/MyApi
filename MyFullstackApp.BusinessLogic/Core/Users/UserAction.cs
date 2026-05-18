@@ -68,7 +68,8 @@ public class UserAction
             Message = "Вход выполнен успешно.",
             UserId = user.Id,
             Role = user.Role,
-            DisplayName = user.DisplayName
+            DisplayName = user.DisplayName,
+            Email = user.Email,
         };
     }
 

@@ -61,6 +61,7 @@ Core/
   CapsuleLocationAction.cs
   TimeCapsuleAction.cs
  Categories/CategoryAction.cs
+ Common/ImageStorage.cs
  Moderation/ModerationReportAction.cs
  Products/ProductAction.cs
  Users/UserAction.cs

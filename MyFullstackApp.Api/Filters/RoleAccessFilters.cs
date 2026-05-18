@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -90,6 +91,19 @@ internal static class RoleResolver
     public static string GetRole(ActionExecutingContext context)
     {
         var request = context.HttpContext.Request;
+
+        var httpUser = context.HttpContext.User;
+        if (httpUser?.Identity?.IsAuthenticated == true)
+        {
+            var claimRole =
+                httpUser.FindFirst("role")?.Value
+                ?? httpUser.FindFirst(ClaimTypes.Role)?.Value;
+            var r = claimRole?.Trim().ToLowerInvariant();
+            if (!string.IsNullOrEmpty(r) && AppRoles.All.Contains(r))
+            {
+                return r;
+            }
+        }
 
         var rawRole = request.Headers[HeaderName].FirstOrDefault()
                       ?? request.Query[QueryName].FirstOrDefault()

@@ -38,7 +38,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPost]
-    [RoleAccess(AppRoles.User, AppRoles.Moderator, AppRoles.Admin)]
+    [RoleAccess(AppRoles.Admin)]
     public IActionResult Create([FromBody] CategoryDto category)
     {
         var status = _category.ResponceCategoryCreateAction(category);
@@ -46,7 +46,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpPut]
-    [RoleAccess(AppRoles.User, AppRoles.Moderator, AppRoles.Admin)]
+    [RoleAccess(AppRoles.Admin)]
     public IActionResult Update([FromBody] CategoryDto category)
     {
         var status = _category.ResponceCategoryUpdateAction(category);
@@ -54,7 +54,7 @@ public class CategoryController : ControllerBase
     }
 
     [HttpDelete("id")]
-    [RoleAccess(AppRoles.User, AppRoles.Moderator, AppRoles.Admin)]
+    [RoleAccess(AppRoles.Admin)]
     public IActionResult Delete(int id)
     {
         var status = _category.ResponceCategoryDeleteAction(id);

@@ -119,7 +119,7 @@ public class TimeCapsuleAction
         using var db = new AppDbContext();
         return db.TimeCapsules
             .Include(c => c.Owner)
-            .Where(c => c.IsPublic && c.OpenAtUtc <= now)
+            .Where(c => c.IsPublic && c.OpenAtUtc <= now && !c.Title.Contains("[Демо]"))
             .OrderByDescending(c => c.OpenAtUtc)
             .AsEnumerable()
             .Select(c =>

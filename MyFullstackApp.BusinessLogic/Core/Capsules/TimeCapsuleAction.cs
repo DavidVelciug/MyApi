@@ -66,7 +66,8 @@ public class TimeCapsuleAction
         var now = DateTime.UtcNow;
         var isOwner = capsule.OwnerUserId == viewerUserId;
         var isRecipient = string.Equals(capsule.RecipientEmail, viewer.Email, StringComparison.OrdinalIgnoreCase);
-        var canView = isOwner || capsule.IsPublic || isRecipient;
+        var isCatalogCapsule = db.Products.Any(p => p.CapsuleId == id);
+        var canView = isOwner || capsule.IsPublic || isRecipient || isCatalogCapsule;
         if (!canView)
         {
             return null;

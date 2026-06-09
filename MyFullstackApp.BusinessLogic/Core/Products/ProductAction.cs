@@ -20,7 +20,10 @@ public class ProductAction
     protected List<ProductDto> ExecuteGetAllProductsAction()
     {
         using var db = new AppDbContext();
-        var pData = db.Products.Include(p => p.Category).ToList();
+        var pData = db.Products
+            .Include(p => p.Category)
+            .Where(p => p.CapsuleId != null && db.TimeCapsules.Any(tc => tc.Id == p.CapsuleId))
+            .ToList();
         return Mapper.Map<List<ProductDto>>(pData);
     }
 

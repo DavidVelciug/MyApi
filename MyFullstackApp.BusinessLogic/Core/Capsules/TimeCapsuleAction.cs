@@ -4,6 +4,7 @@ using MyFullstackApp.BusinessLogic.Core.Common;
 using MyFullstackApp.DataAccess.Context;
 using MyFullstackApp.Domains.Entities.Capsule;
 using MyFullstackApp.Domains.Entities.Moderation;
+using MyFullstackApp.Domains.Entities.Product;
 using MyFullstackApp.Domains.Enums;
 using MyFullstackApp.Domains.Models.Base;
 using MyFullstackApp.Domains.Models.Capsule;
@@ -119,7 +120,7 @@ public class TimeCapsuleAction
         using var db = new AppDbContext();
         return db.TimeCapsules
             .Include(c => c.Owner)
-            .Where(c => c.IsPublic && c.OpenAtUtc <= now)
+            .Where(c => c.IsPublic && c.OpenAtUtc <= now && !c.Title.Contains("[Демо]"))
             .OrderByDescending(c => c.OpenAtUtc)
             .AsEnumerable()
             .Select(c =>
@@ -247,6 +248,9 @@ public class TimeCapsuleAction
             return new ResponceMsg { IsSuccess = false, Message = "Capsule not found." };
         }
 
+        var orphanProducts = db.Products.Where(p => p.CapsuleId == id).ToList();
+        if (orphanProducts.Count > 0) db.Products.RemoveRange(orphanProducts);
+
         db.TimeCapsules.Remove(data);
         db.SaveChanges();
 
@@ -261,6 +265,9 @@ public class TimeCapsuleAction
         {
             return new ResponceMsg { IsSuccess = false, Message = "Capsule not found for this owner." };
         }
+
+        var orphanProducts = db.Products.Where(p => p.CapsuleId == id).ToList();
+        if (orphanProducts.Count > 0) db.Products.RemoveRange(orphanProducts);
 
         db.TimeCapsules.Remove(data);
         db.SaveChanges();

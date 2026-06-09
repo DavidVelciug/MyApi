@@ -156,18 +156,6 @@ public static class DbInitializer
         var pastOpen = now.AddDays(-2);
         var futureOpen = now.AddDays(30);
 
-        var capPublicOpened = new TimeCapsuleData
-        {
-            OwnerUserId = u1.Id,
-            ContentType = CapsuleContentType.Text,
-            Title = "Добро пожаловать в ленту",
-            TextContent = "Это публичная капсула, уже открытая для всех.",
-            OpenAtUtc = pastOpen,
-            CreatedAtUtc = now.AddDays(-10),
-            RecipientEmail = "reader@example.com",
-            IsPublic = true
-        };
-
         var capSealed = new TimeCapsuleData
         {
             OwnerUserId = u1.Id,
@@ -192,16 +180,8 @@ public static class DbInitializer
             IsPublic = true
         };
 
-        db.TimeCapsules.AddRange(capPublicOpened, capSealed, capLink);
+        db.TimeCapsules.AddRange(capSealed, capLink);
         db.SaveChanges();
-
-        db.CapsuleLocations.Add(new CapsuleLocationData
-        {
-            CapsuleId = capPublicOpened.Id,
-            Latitude = 48.8566,
-            Longitude = 2.3522,
-            PlaceLabel = "Париж — открой, когда будешь здесь"
-        });
 
         db.ModerationReports.Add(new ModerationReportData
         {

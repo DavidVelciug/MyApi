@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyFullstackApp.BusinessLogic.Core.Common;
 using MyFullstackApp.DataAccess.Context;
+using MyFullstackApp.Domains.Entities.Capsule;
 using MyFullstackApp.Domains.Entities.Product;
 using MyFullstackApp.Domains.Models.Base;
 using MyFullstackApp.Domains.Models.Product;
@@ -24,7 +25,28 @@ public class ProductAction
             .Include(p => p.Category)
             .Where(p => p.CapsuleId != null && db.TimeCapsules.Any(tc => tc.Id == p.CapsuleId))
             .ToList();
-        return Mapper.Map<List<ProductDto>>(pData);
+
+        var capsuleOwnerIds = pData
+            .Where(p => p.CapsuleId != null)
+            .Select(p => p.CapsuleId!.Value)
+            .Distinct()
+            .ToList();
+
+        var ownersByCapsuleId = db.TimeCapsules
+            .Include(c => c.Owner)
+            .Where(c => capsuleOwnerIds.Contains(c.Id))
+            .ToDictionary(c => c.Id, c => c.Owner);
+
+        return pData.Select(p =>
+        {
+            var dto = Mapper.Map<ProductDto>(p);
+            if (p.CapsuleId != null && ownersByCapsuleId.TryGetValue(p.CapsuleId.Value, out var owner))
+            {
+                dto.CreatorName = owner.DisplayName;
+                dto.CreatorEmail = owner.Email;
+            }
+            return dto;
+        }).ToList();
     }
 
     protected ProductDto? GetProductDataByIdAction(int id)

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyApi.Filters;
 using MyFullstackApp.BusinessLogic;
 using MyFullstackApp.BusinessLogic.Interface;
+using MyFullstackApp.Domains.Models.Capsule;
 
 namespace MyApi.Controller;
 
@@ -21,5 +22,17 @@ public class OpenedCapsuleController : ControllerBase
     public IActionResult ForUser(int userId)
     {
         return Ok(_capsules.GetOpenedCapsulesForUserAction(userId));
+    }
+
+    [HttpGet("ids")]
+    public IActionResult GetOpenedIds(int userId)
+    {
+        return Ok(_capsules.GetOpenedCapsuleIdsForUserAction(userId));
+    }
+
+    [HttpPost]
+    public IActionResult Record([FromBody] RecordOpenedCapsuleDto dto)
+    {
+        return Ok(_capsules.RecordOpenedCapsuleAction(dto.UserId, dto.CapsuleId, dto.OpenedFrom));
     }
 }

@@ -31,5 +31,8 @@ public class UserAccountData
     public bool NotifyPushEnabled { get; set; } = true;
     public bool LoginAlertsEnabled { get; set; } = true;
 
+    [StringLength(500)]
+    public string? AvatarUrl { get; set; }
+
     public List<TimeCapsuleData> Capsules { get; set; } = new();
 }

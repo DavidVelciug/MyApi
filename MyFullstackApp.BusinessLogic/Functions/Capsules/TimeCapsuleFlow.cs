@@ -34,4 +34,10 @@ public class TimeCapsuleFlow : TimeCapsuleAction, ITimeCapsule
     public ResponceMsg ResponceTimeCapsuleDeleteAction(int id) => ExecuteTimeCapsuleDeleteAction(id);
     public ResponceMsg ResponceTimeCapsuleDeleteByOwnerAction(int id, int ownerUserId) =>
         ExecuteTimeCapsuleDeleteByOwnerAction(id, ownerUserId);
+
+    public ResponceMsg RecordOpenedCapsuleAction(int userId, int capsuleId, string? openedFrom) =>
+        ExecuteRecordOpenedCapsuleAction(userId, capsuleId, openedFrom);
+
+    public List<int> GetOpenedCapsuleIdsForUserAction(int userId) =>
+        ExecuteGetOpenedCapsuleIdsForUserAction(userId);
 }

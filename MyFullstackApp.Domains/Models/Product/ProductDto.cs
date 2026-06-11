@@ -10,4 +10,6 @@ public class ProductDto
     public int? CapsuleId { get; set; }
     public int CategoryId { get; set; }
     public string? Category { get; set; }
+    public string? CreatorName { get; set; }
+    public string? CreatorEmail { get; set; }
 }

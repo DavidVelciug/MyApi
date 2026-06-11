@@ -3,6 +3,7 @@ using MyFullstackApp.Domains.Entities.Capsule;
 using MyFullstackApp.Domains.Entities.Category;
 using MyFullstackApp.Domains.Entities.Moderation;
 using MyFullstackApp.Domains.Entities.Product;
+using MyFullstackApp.Domains.Entities.Reaction;
 using MyFullstackApp.Domains.Entities.User;
 
 namespace MyFullstackApp.DataAccess.Context;
@@ -25,6 +26,8 @@ public class AppDbContext : DbContext
     public DbSet<TimeCapsuleData> TimeCapsules { get; set; } = null!;
     public DbSet<CapsuleLocationData> CapsuleLocations { get; set; } = null!;
     public DbSet<ModerationReportData> ModerationReports { get; set; } = null!;
+    public DbSet<ReactionData> Reactions { get; set; } = null!;
+    public DbSet<OpenedCapsuleData> OpenedCapsules { get; set; } = null!;
 
     // 3. Этот метод больше не нужен для работы, так как настройки теперь в Program.cs
     // Но мы оставили логику переключения в Program.cs, так что здесь можно просто закомментировать
@@ -75,5 +78,19 @@ public class AppDbContext : DbContext
             .WithMany(c => c.Reports)
             .HasForeignKey(r => r.CapsuleId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ReactionData>()
+            .HasIndex(r => new { r.UserId, r.CapsuleId })
+            .IsUnique()
+            .HasFilter("[CapsuleId] IS NOT NULL");
+
+        modelBuilder.Entity<ReactionData>()
+            .HasIndex(r => new { r.UserId, r.ProductId })
+            .IsUnique()
+            .HasFilter("[ProductId] IS NOT NULL");
+
+        modelBuilder.Entity<OpenedCapsuleData>()
+            .HasIndex(o => new { o.UserId, o.CapsuleId })
+            .IsUnique();
     }
 }

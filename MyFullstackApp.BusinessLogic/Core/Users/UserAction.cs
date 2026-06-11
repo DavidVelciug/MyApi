@@ -107,16 +107,28 @@ public class UserAction
             return new ResponceMsg { IsSuccess = false, Message = "User not found." };
         }
 
-        var emailTaken = db.UserAccounts.Any(x => x.Id != user.Id && x.Email.Equals(user.Email));
-        if (emailTaken)
+        if (!string.IsNullOrWhiteSpace(user.Email) && user.Email != data.Email)
         {
-            return new ResponceMsg { IsSuccess = false, Message = "Email is already in use." };
+            var emailTaken = db.UserAccounts.Any(x => x.Id != user.Id && x.Email.Equals(user.Email));
+            if (emailTaken)
+            {
+                return new ResponceMsg { IsSuccess = false, Message = "Email is already in use." };
+            }
+            data.Email = user.Email;
         }
 
-        data.Email = user.Email;
-        data.DisplayName = user.DisplayName;
-        data.Role = string.IsNullOrWhiteSpace(user.Role) ? data.Role : user.Role.Trim().ToLowerInvariant();
-        data.Password = string.IsNullOrWhiteSpace(user.Password) ? data.Password : user.Password;
+        if (!string.IsNullOrWhiteSpace(user.DisplayName))
+            data.DisplayName = user.DisplayName;
+
+        if (!string.IsNullOrWhiteSpace(user.Role))
+            data.Role = user.Role.Trim().ToLowerInvariant();
+
+        if (!string.IsNullOrWhiteSpace(user.Password))
+            data.Password = user.Password;
+
+        if (user.AvatarUrl != null)
+            data.AvatarUrl = string.IsNullOrWhiteSpace(user.AvatarUrl) ? null : user.AvatarUrl;
+
         data.NotifyEmailEnabled = user.NotifyEmailEnabled;
         data.NotifyPushEnabled = user.NotifyPushEnabled;
         data.LoginAlertsEnabled = user.LoginAlertsEnabled;

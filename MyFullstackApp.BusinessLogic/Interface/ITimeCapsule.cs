@@ -16,4 +16,6 @@ public interface ITimeCapsule
     ResponceMsg ResponceTimeCapsuleUpdateAction(TimeCapsuleDto capsule);
     ResponceMsg ResponceTimeCapsuleDeleteAction(int id);
     ResponceMsg ResponceTimeCapsuleDeleteByOwnerAction(int id, int ownerUserId);
+    ResponceMsg RecordOpenedCapsuleAction(int userId, int capsuleId, string? openedFrom);
+    List<int> GetOpenedCapsuleIdsForUserAction(int userId);
 }

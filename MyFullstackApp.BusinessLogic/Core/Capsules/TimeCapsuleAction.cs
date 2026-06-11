@@ -5,6 +5,7 @@ using MyFullstackApp.DataAccess.Context;
 using MyFullstackApp.Domains.Entities.Capsule;
 using MyFullstackApp.Domains.Entities.Moderation;
 using MyFullstackApp.Domains.Entities.Product;
+using MyFullstackApp.Domains.Entities.Reaction;
 using MyFullstackApp.Domains.Enums;
 using MyFullstackApp.Domains.Models.Base;
 using MyFullstackApp.Domains.Models.Capsule;
@@ -273,5 +274,40 @@ public class TimeCapsuleAction
         db.TimeCapsules.Remove(data);
         db.SaveChanges();
         return new ResponceMsg { IsSuccess = true, Message = "Capsule deleted successfully." };
+    }
+
+    protected ResponceMsg ExecuteRecordOpenedCapsuleAction(int userId, int capsuleId, string? openedFrom)
+    {
+        using var db = new AppDbContext();
+        if (!db.TimeCapsules.Any(c => c.Id == capsuleId))
+        {
+            return new ResponceMsg { IsSuccess = false, Message = "Capsule not found." };
+        }
+
+        var existing = db.OpenedCapsules.FirstOrDefault(o => o.UserId == userId && o.CapsuleId == capsuleId);
+        if (existing != null)
+        {
+            return new ResponceMsg { IsSuccess = true, Message = "Already recorded." };
+        }
+
+        db.OpenedCapsules.Add(new OpenedCapsuleData
+        {
+            UserId = userId,
+            CapsuleId = capsuleId,
+            OpenedAtUtc = DateTime.UtcNow,
+            OpenedFrom = openedFrom
+        });
+
+        db.SaveChanges();
+        return new ResponceMsg { IsSuccess = true, Message = "Opened capsule recorded." };
+    }
+
+    protected List<int> ExecuteGetOpenedCapsuleIdsForUserAction(int userId)
+    {
+        using var db = new AppDbContext();
+        return db.OpenedCapsules
+            .Where(o => o.UserId == userId)
+            .Select(o => o.CapsuleId)
+            .ToList();
     }
 }

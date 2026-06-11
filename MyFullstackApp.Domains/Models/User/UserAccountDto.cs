@@ -11,4 +11,5 @@ public class UserAccountDto
     public bool NotifyEmailEnabled { get; set; }
     public bool NotifyPushEnabled { get; set; }
     public bool LoginAlertsEnabled { get; set; }
+    public string? AvatarUrl { get; set; }
 }

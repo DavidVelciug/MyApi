@@ -4,6 +4,7 @@ using MyFullstackApp.BusinessLogic.Functions.Capsules;
 using MyFullstackApp.BusinessLogic.Functions.Categories;
 using MyFullstackApp.BusinessLogic.Functions.Moderation;
 using MyFullstackApp.BusinessLogic.Functions.Products;
+using MyFullstackApp.BusinessLogic.Functions.Reactions;
 using MyFullstackApp.BusinessLogic.Functions.Users;
 using MyFullstackApp.BusinessLogic.Interface;
 
@@ -31,4 +32,6 @@ public class BusinessLogic
     public IModerationReport GetModerationReportActions() => new ModerationReportFlow(_mapper);
 
     public IAdminAnalytics GetAdminAnalyticsActions() => new AdminAnalyticsFlow();
+
+    public IReaction GetReactionActions() => new ReactionFlow();
 }

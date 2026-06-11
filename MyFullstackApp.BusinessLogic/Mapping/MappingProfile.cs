@@ -3,11 +3,13 @@ using MyFullstackApp.Domains.Entities.Capsule;
 using MyFullstackApp.Domains.Entities.Category;
 using MyFullstackApp.Domains.Entities.Moderation;
 using MyFullstackApp.Domains.Entities.Product;
+using MyFullstackApp.Domains.Entities.Reaction;
 using MyFullstackApp.Domains.Entities.User;
 using MyFullstackApp.Domains.Models.Capsule;
 using MyFullstackApp.Domains.Models.Category;
 using MyFullstackApp.Domains.Models.Moderation;
 using MyFullstackApp.Domains.Models.Product;
+using MyFullstackApp.Domains.Models.Reaction;
 using MyFullstackApp.Domains.Models.User;
 
 namespace MyFullstackApp.BusinessLogic.Mapping;
@@ -42,5 +44,9 @@ public class MappingProfile : Profile
         CreateMap<ModerationReportData, ModerationReportDto>().ReverseMap();
         CreateMap<ModerationReportDto, ModerationReportData>()
             .ForMember(d => d.Capsule, o => o.Ignore());
+
+        CreateMap<ReactionData, ReactionDto>().ReverseMap();
+
+        CreateMap<OpenedCapsuleData, OpenedCapsuleDto>().ReverseMap();
     }
 }
